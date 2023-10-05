@@ -6,7 +6,7 @@ import { faSave } from "@fortawesome/free-solid-svg-icons"
 import useAuth from "../../hooks/useAuth"
 
 const NewNoteForm = ({ users }) => {
-    const { isManager, isAdmin, username } = useAuth()
+    const { username } = useAuth()
 
     const [addNewNote, {
         isLoading,
@@ -43,21 +43,17 @@ const NewNoteForm = ({ users }) => {
         }
     }
 
-    let options
-    if(isAdmin || isManager){
-        options = users.map(user => {
-            return (
-                <option
-                    key={user.id}
-                    value={user.id}
-
-                > {user.username}</option >
-            )
-        })
-    }else {
-        const user = users.filter(user => user.username === username)
-        options = <option value={user.id}>{username}{user.id}</option>
-    }
+    
+    const options = users.map(user => {
+        return (
+            <option
+                key={user.id}
+                value={user.id}
+                disabled={user.username !== username}
+            > {user.username}</option >
+        )
+    })
+    
 
     const errClass = isError ? "errmsg" : "offscreen"
     const validTitleClass = !title ? "form__input--incomplete" : ''
