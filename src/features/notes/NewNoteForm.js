@@ -55,8 +55,7 @@ const NewNoteForm = ({ users }) => {
             )
         })
     }else {
-        const { ids, entities } = users
-        const user = ids.filter(usrId => entities[usrId].username === username)
+        const user = users.filter(user => user.username === username)
         options = <option value={user.id}>{username}{user.id}</option>
     }
 
