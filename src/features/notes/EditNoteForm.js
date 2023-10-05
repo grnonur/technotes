@@ -75,6 +75,7 @@ const EditNoteForm = ({ note, users }) => {
     }else {
         options = <option value={note.user}>{note.username}</option>
     }
+    
     const errClass = (isError || isDelError) ? "errmsg" : "offscreen"
     const validTitleClass = !title ? "form__input--incomplete" : ''
     const validTextClass = !text ? "form__input--incomplete" : ''

@@ -3,8 +3,10 @@ import { useNavigate } from "react-router-dom"
 import { useAddNewNoteMutation } from "./notesApiSlice"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSave } from "@fortawesome/free-solid-svg-icons"
+import useAuth from "../../hooks/useAuth"
 
 const NewNoteForm = ({ users }) => {
+    const { isManager, isAdmin, username } = useAuth()
 
     const [addNewNote, {
         isLoading,
@@ -41,14 +43,21 @@ const NewNoteForm = ({ users }) => {
         }
     }
 
-    const options = users.map(user => {
-        return (
-            <option
-                key={user.id}
-                value={user.id}
-            > {user.username}</option >
-        )
-    })
+    let options
+    if(isAdmin || isManager){
+        options = users.map(user => {
+            return (
+                <option
+                    key={user.id}
+                    value={user.id}
+
+                > {user.username}</option >
+            )
+        })
+    }else {
+        const user = users.filter(usr => usr.username === username)
+        options = <option value={user.id}>{username}</option>
+    }
 
     const errClass = isError ? "errmsg" : "offscreen"
     const validTitleClass = !title ? "form__input--incomplete" : ''
