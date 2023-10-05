@@ -56,7 +56,7 @@ const NewNoteForm = ({ users }) => {
         })
     }else {
         const user = users.filter(usr => usr.username === username)
-        options = <option value={user.id}>{username}</option>
+        options = <option value={user.id}>{user.username}</option>
     }
 
     const errClass = isError ? "errmsg" : "offscreen"
