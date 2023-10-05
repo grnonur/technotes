@@ -60,17 +60,21 @@ const EditNoteForm = ({ note, users }) => {
 
     const created = new Date(note.createdAt).toLocaleString('en-US', { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })
     const updated = new Date(note.updatedAt).toLocaleString('en-US', { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })
+    
+    let options
+    if(isAdmin || isManager){
+        options = users.map(user => {
+            return (
+                <option
+                    key={user.id}
+                    value={user.id}
 
-    const options = users.map(user => {
-        return (
-            <option
-                key={user.id}
-                value={user.id}
-
-            > {user.username}</option >
-        )
-    })
-
+                > {user.username}</option >
+            )
+        })
+    }else {
+        options = <option value={note.user}>{note.username}</option>
+    }
     const errClass = (isError || isDelError) ? "errmsg" : "offscreen"
     const validTitleClass = !title ? "form__input--incomplete" : ''
     const validTextClass = !text ? "form__input--incomplete" : ''
