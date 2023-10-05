@@ -6,7 +6,7 @@ import { faSave } from "@fortawesome/free-solid-svg-icons"
 import useAuth from "../../hooks/useAuth"
 
 const NewNoteForm = ({ users }) => {
-    const { isManager, isAdmin, username } = useAuth()
+    const { isManager, isAdmin, username, uI } = useAuth()
 
     const [addNewNote, {
         isLoading,
@@ -55,8 +55,7 @@ const NewNoteForm = ({ users }) => {
             )
         })
     }else {
-        const user = users.filter(usr => usr.username === username)
-        options = <option value={user.id}>{user.username}</option>
+        options = <option value={uI.id}>{username}</option>
     }
 
     const errClass = isError ? "errmsg" : "offscreen"
